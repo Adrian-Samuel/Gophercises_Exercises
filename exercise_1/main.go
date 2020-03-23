@@ -9,15 +9,9 @@ import (
 )
 
 func returnMathTuple(mathOp string) (int64, int64) {
-	var num int64
-	var num2 int64
-
 	math := strings.Split(mathOp, "+")
-	num, err := strconv.ParseInt(math[0], 10, 64)
-	if err != nil {fmt.Println(err)}
-	num2, err = strconv.ParseInt(math[1], 10, 64)
-	if err != nil {fmt.Println(err)}
-
+	num, _ := strconv.ParseInt(math[0], 10, 64)
+	num2, _ = strconv.ParseInt(math[1], 10, 64)
 	return num, num2
 }
 
