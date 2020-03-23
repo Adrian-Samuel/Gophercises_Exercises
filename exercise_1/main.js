@@ -24,4 +24,4 @@ const  parseFile = async () => {
 
 
 
-parseFile("file.csv");
+parseFile();
