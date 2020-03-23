@@ -1,7 +1,9 @@
-const {readFile} = require('fs').promises;
+const {
+    readFile
+} = require('fs').promises;
 
 const flagOptions = (arguments) => {
-   return arguments.slice(2).reduce((options, currentOption) => {
+    return arguments.slice(2).reduce((options, currentOption) => {
         const [option, value] = currentOption.split("=")
         const cleanedOption = option.replace(/-/g, "")
         options[cleanedOption] = value;
@@ -10,13 +12,16 @@ const flagOptions = (arguments) => {
 
 }
 
-const getAnswers = async () => {
+const parseFile = async () => {
 
-    const {filename} = flagOptions(process.argv)
-  
+    const {
+        filename
+    } = flagOptions(process.argv)
+
     const getFile = await readFile(filename, "utf8");
 
     const rows = getFile.split(/\r?\n/g);
+
     const results = {
         right: 0,
         wrong: 0
@@ -26,10 +31,10 @@ const getAnswers = async () => {
         const [operation, answer] = record.split(',');
         const [firstNumber, secondNumber] = operation.split('+');
 
-        const checkOperation = Number(firstNumber) + Number(secondNumber) === Number(answer);
+        const mathExpression = Number(firstNumber) + Number(secondNumber) === Number(answer);
 
-        if (checkOperation) results["right"] += 1;
-        if (!checkOperation) results["wrong"] += 1
+        if (mathExpression) results["right"] += 1;
+        if (!mathExpression) results["wrong"] += 1
 
     }
 
@@ -38,4 +43,4 @@ const getAnswers = async () => {
 
 
 
-getAnswers();
+parseFile();
