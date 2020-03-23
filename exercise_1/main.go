@@ -8,18 +8,18 @@ import (
 	"strings"
 )
 
-func returnMathTuple(mathOp string) (int64, int64) {
-	math := strings.Split(mathOp, "+")
-	num, _ := strconv.ParseInt(math[0], 10, 64)
-	num2, _ = strconv.ParseInt(math[1], 10, 64)
-	return num, num2
+func stringToNumber(mathArg string) int64 {
+	num, err := strconv.ParseInt(mathArg, 10, 64)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return num
 }
 
 func main() {
-	fileName := flag.String("filename","","the name of the file")
+	fileName := flag.String("filename", "", "the name of the file")
 	flag.Parse()
 	content, err := ioutil.ReadFile(*fileName)
-
 
 	if err != nil {
 		fmt.Println(err)
@@ -38,13 +38,22 @@ func main() {
 
 		answerNumber, err := strconv.ParseInt(answer, 10, 64)
 
-		if err != nil {fmt.Println(err)}
+		if err != nil {
+			fmt.Println(err)
+		}
+		mathArguments := strings.Split(math, "+")
 
-		firstNumber, secondNumber := returnMathTuple(math)
-		expression:= firstNumber+secondNumber == answerNumber
+		firstNumber := stringToNumber(mathArguments[0])
+		secondNumber := stringToNumber(mathArguments[1])
 
-		if expression {counter["right"]+= 1}
-		if !expression {counter["left"]+=1}
+		checkSum := firstNumber+secondNumber == answerNumber
+
+		if checkSum {
+			counter["right"] += 1
+		}
+		if !checkSum {
+			counter["left"] += 1
+		}
 	}
 
 	fmt.Println(counter)
