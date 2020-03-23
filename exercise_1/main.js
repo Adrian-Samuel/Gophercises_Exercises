@@ -10,7 +10,7 @@ const flagOptions = (arguments) => {
 
 }
 
-const parseFile = async () => {
+const getAnswers = async () => {
 
     const {filename} = flagOptions(process.argv)
   
@@ -38,4 +38,4 @@ const parseFile = async () => {
 
 
 
-parseFile();
+getAnswers();
