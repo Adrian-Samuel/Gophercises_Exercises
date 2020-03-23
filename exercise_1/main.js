@@ -1,21 +1,35 @@
 const {readFile} = require('fs').promises;
 
-const  parseFile = async () => {
-    const fileName = process.argv.slice(2)[0].split("=")[1];
+const flagOptions = (arguments) => {
+   return arguments.slice(2).reduce((options, currentOption) => {
+        const [option, value] = currentOption.split("=")
+        const cleanedOption = option.replace(/-/g, "")
+        options[cleanedOption] = value;
+        return options;
+    }, {})
 
-    const getFile = await readFile(fileName, "utf8");
+}
+
+const parseFile = async () => {
+
+    const {filename} = flagOptions(process.argv)
+  
+    const getFile = await readFile(filename, "utf8");
 
     const rows = getFile.split(/\r?\n/g);
-    const results = {right: 0, wrong:0};
+    const results = {
+        right: 0,
+        wrong: 0
+    };
 
-    for(const record of rows) {
-    const [operation, answer] = record.split(',');
-    const [firstNumber, secondNumber] = operation.split('+');
+    for (const record of rows) {
+        const [operation, answer] = record.split(',');
+        const [firstNumber, secondNumber] = operation.split('+');
 
-    const mathExpression = Number(firstNumber) + Number(secondNumber) === Number(answer);
+        const mathExpression = Number(firstNumber) + Number(secondNumber) === Number(answer);
 
-    if(mathExpression)results["right"] += 1;
-    if(!mathExpression)results["wrong"] += 1
+        if (mathExpression) results["right"] += 1;
+        if (!mathExpression) results["wrong"] += 1
 
     }
 
