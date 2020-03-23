@@ -26,10 +26,10 @@ const parseFile = async () => {
         const [operation, answer] = record.split(',');
         const [firstNumber, secondNumber] = operation.split('+');
 
-        const mathExpression = Number(firstNumber) + Number(secondNumber) === Number(answer);
+        const checkOperation = Number(firstNumber) + Number(secondNumber) === Number(answer);
 
-        if (mathExpression) results["right"] += 1;
-        if (!mathExpression) results["wrong"] += 1
+        if (checkOperation) results["right"] += 1;
+        if (!checkOperation) results["wrong"] += 1
 
     }
 
